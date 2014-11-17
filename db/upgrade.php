@@ -23,7 +23,7 @@ function xmldb_local_onenote_upgrade($oldversion) {
 
     $dbman = $DB->get_manager();
 
-    if ($oldversion < 2014110501) {
+    if ($oldversion < 2014110503) {
         // Define table to be created.
         $table = new xmldb_table('onenote_user_sections');
     
@@ -64,7 +64,7 @@ function xmldb_local_onenote_upgrade($oldversion) {
         $dbman->create_table($table);
     
         // Onenote savepoint reached.
-        upgrade_plugin_savepoint(true, 2014110501, 'local', 'onenote');
+        upgrade_plugin_savepoint(true, 2014110503, 'local', 'onenote');
     }
     
     // Moodle v2.3.0 release upgrade line
