@@ -26,7 +26,7 @@
 namespace local_onenote\api;
 
 use context;
-use context_module;
+use core\context\module;
 use DOMDocument;
 use DOMXPath;
 use html_writer;
@@ -36,7 +36,7 @@ use local_o365\oauth2\token;
 use local_o365\rest\unified;
 use local_o365\utils;
 use moodle_exception;
-use moodle_url;
+use core\url;
 use stdClass;
 
 /**
@@ -614,7 +614,7 @@ abstract class base {
         $actionparams['submissionid'] = $submissionid;
         $actionparams['gradeid'] = $gradeid;
 
-        $url = new moodle_url('/local/onenote/onenote_actions.php', $actionparams);
+        $url = new url('/local/onenote/onenote_actions.php', $actionparams);
 
         $attrs = ['onclick' => 'window.open(this.href,\'_blank\'); return false;', 'class' => 'local_onenote_linkbutton'];
         return html_writer::link($url->out(false), $buttontext, $attrs);
@@ -779,7 +779,7 @@ abstract class base {
 
         $cm = get_coursemodule_from_id('assign', $cmid, 0, false, MUST_EXIST);
         $assign = $DB->get_record('assign', ['id' => $cm->instance]);
-        $context = context_module::instance($cm->id);
+        $context = module::instance($cm->id);
         $userid = $USER->id;
 
         // If $submission_userId is given, then it contains the student's user id.
@@ -1259,7 +1259,7 @@ abstract class base {
      * @return bool Whether the user is a grading user within a course.
      */
     public function is_teacher($cmid, $userid) {
-        $context = context_module::instance($cmid);
+        $context = module::instance($cmid);
         return has_capability('mod/assign:grade', $context, $userid);
     }
 
@@ -1271,7 +1271,7 @@ abstract class base {
      * @return bool Whether the user can submit assignments.
      */
     public function is_student($cmid, $userid) {
-        $context = context_module::instance($cmid);
+        $context = module::instance($cmid);
         return has_capability('mod/assign:submit', $context, $userid);
     }
 
